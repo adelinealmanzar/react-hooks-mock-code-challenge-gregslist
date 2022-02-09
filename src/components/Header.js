@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import Search from "./Search";
 
-function Header({ handleSearchValPass, handleSortPass }) {
-  const [isClicked, setIsClicked] = useState(false)
+function Header({ handleSearchValPass, setIsClicked }) {
+  
 
   function handleSortClick() {
     setIsClicked(isClicked => !isClicked)
   }
-
-  handleSortPass(isClicked)
 
   return (
     <header>
