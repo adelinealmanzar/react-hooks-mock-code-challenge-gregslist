@@ -28,10 +28,31 @@ function App() {
     setListings(deletedListingsArr)
   }
 
+  function handleSortPass(isClicked) {
+    if (isClicked) {
+    fetch('http://localhost:6001/listings')
+      .then(r => r.json())
+      .then(fetchedListings => {
+        const sortedListingsArr = fetchedListings.sort( (a, b) => {
+          if (a.location.toLowerCase() < b.location.toLowerCase()) {
+            return -1
+          } else if (a.location.toLowerCase() > b.location.toLowerCase()) {
+            return 1
+          }
+          return 0
+        })
+        console.log(sortedListingsArr)
+        setListings(() => sortedListingsArr)
+      })
+    }
+
+  } 
+
+
   return (
     <div className="app">
       {/* search bar parent */}
-      <Header handleSearchValPass={handleSearchValPass}/>
+      <Header handleSearchValPass={handleSearchValPass} handleSortPass={handleSortPass}/>
       {/* card parent */}
       <ListingsContainer listings={listings} handleDelPass={handleDelPass}/>
     </div>
@@ -41,8 +62,6 @@ function App() {
 export default App;
 
 /*
-done (1) When the app starts, I can see all listings.
-done (2) I can "favorite" and "unfavorite" a listing on the frontend by clicking the star icon. This feature doesn't need backend persistence.
-done (3) I can remove a listing from the page by clicking the trash can icon. This change should be persisted in the backend.
-done (4) I can search for listings by their description.
+(kind of) I can sort the listings alphabetically by location.
+I can create a new listing by submitting a form, and persist the changes to the backend.
 */

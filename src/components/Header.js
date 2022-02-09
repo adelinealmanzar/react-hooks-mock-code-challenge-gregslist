@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Search from "./Search";
 
-function Header({ handleSearchValPass }) {
+function Header({ handleSearchValPass, handleSortPass }) {
+  const [isClicked, setIsClicked] = useState(false)
+
+  function handleSortClick() {
+    setIsClicked(isClicked => !isClicked)
+  }
+
+  handleSortPass(isClicked)
+
   return (
     <header>
       <h1>
@@ -11,6 +19,7 @@ function Header({ handleSearchValPass }) {
         gregslist
       </h1>
       <Search handleSearchValPass={handleSearchValPass}/>
+      <button onClick={handleSortClick}>Alphabetically</button>
     </header>
   );
 }
